@@ -22,7 +22,6 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Aside from "@/pages/admin/aside";
-// import Main from "@/components/main";
 
 export default {
   name: "index",
@@ -34,9 +33,8 @@ export default {
   data() {
     return {};
   },
-  created() {
-    // console.log(this.$route.path.slice(1, 6));
-  }
+  computed: {},
+  created() {}
 };
 </script>
 

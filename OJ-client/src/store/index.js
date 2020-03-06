@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+import axios from '@/js/axios'
+
 import User from './modules/user'
 import Problems from './modules/Problems'
 

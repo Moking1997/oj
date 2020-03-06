@@ -30,7 +30,7 @@
       <el-table-column label="权限" prop="limit"></el-table-column>
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
-          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+          <el-input v-model="search" size="mini" placeholder="输入用户名搜索" />
         </template>
         <template slot-scope="scope">
           <el-button size="mini" @click="userEdit(scope.$index, scope.row)">编辑</el-button>

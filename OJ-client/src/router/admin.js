@@ -4,7 +4,6 @@ import Knowledge from '@/pages/admin/knowledge'
 
 const index = {
     path: '/admin',
-    name: 'admin',
     component: Admin,
     children: [
         { path: '', component: User },

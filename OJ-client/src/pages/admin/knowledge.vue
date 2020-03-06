@@ -7,14 +7,14 @@
           <el-input placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
         </el-col>
         <el-col :span="6" style="text-align:right">
-          <el-button type="primary" @click="append({ID:0})">添加根节点</el-button>
+          <el-button type="primary" @click="append({id:0})">添加根节点</el-button>
         </el-col>
       </el-row>
       <br />
       <!-- {{tree}} -->
       <el-tree
         :data="tree"
-        node-key="ID"
+        node-key="id"
         default-expand-all
         :filter-node-method="filterNode"
         :expand-on-click-node="false"
@@ -24,7 +24,7 @@
           <span>{{ node.label}}</span>
           <span>
             <el-button type="text" size="mini" @click="() => append(data)">添加</el-button>
-            <el-button type="text" size="mini" @click="() => remove(data)">删除</el-button>
+            <el-button type="text" size="mini" @click="() => remove(data,node)">删除</el-button>
           </span>
         </span>
       </el-tree>
@@ -59,11 +59,7 @@ export default {
         inputErrorMessage: "输入格式不正确"
       })
         .then(({ value }) => {
-          this.$message({
-            type: "success",
-            message: "你的内容是: " + value
-          });
-          this.addNode(data.ID, value);
+          this.addNode(data, value);
         })
         .catch(() => {
           this.$message({
@@ -72,37 +68,50 @@ export default {
           });
         });
     },
-    async addNode(parentID, label) {
-      let data = new FormData();
-      data.append("parentID", parentID);
-      data.append("label", label);
-      await axios
-        .post("http://localhost:8088/api/problem/catalog/add/id", data)
-        .then(res => {
-          console.log("res=>", res);
+    async addNode(data, label) {
+      let { data: res } = await axios.post("problems/catalogs/add", {
+        parentID: data.id,
+        label: label
+      });
+      if (res.state == 1) {
+        this.$message.error("该知识点已存在");
+      } else {
+        let newChild = {
+          id: res.id,
+          parentID: data.id,
+          label: label,
+          children: []
+        };
+        data.children.push(newChild);
+        this.$message({
+          type: "success",
+          message: "你添加的知识点为: " + label
         });
+      }
     },
     async removeNode(id) {
-      let data = new FormData();
-      data.append("id", id);
-      await axios
-        .post("http://localhost:8088/api/problem/catalog/delete/id", data)
-        .then(res => {
-          console.log("res=>", res);
-        });
+      await this.$http.post("problems/catalogs/detele", {
+        id: id
+      });
     },
-    remove(data) {
+    remove(data, node) {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
-        .then(() => {
+        .then(async () => {
+          await this.$http.post("problems/catalogs/detele", {
+            id: data.id
+          });
+          const parent = node.parent;
+          const children = parent.data.children || parent.data;
+          const index = children.findIndex(d => d.id === data.id);
+          children.splice(index, 1);
           this.$message({
             type: "success",
             message: "删除成功!"
           });
-          this.removeNode(data.ID);
         })
         .catch(() => {
           this.$message({
@@ -113,9 +122,11 @@ export default {
     },
     async getTree(element) {
       try {
-        let res = await axios.get(
-          "http://localhost:8088/api/catalog/" + element.ID
-        );
+        let { data: res } = await this.$http.get("problems/catalogs", {
+          params: {
+            parentID: element.id
+          }
+        });
         let children = res.data;
         this.$set(element, "children", children);
 
@@ -129,10 +140,13 @@ export default {
         alert("请求出错！");
       }
     },
-    //使用 asyns/await
     async getTreeHead() {
       try {
-        let res = await axios.get("http://localhost:8088/api/catalog/0");
+        let { data: res } = await this.$http.get("problems/catalogs", {
+          params: {
+            parentID: 0
+          }
+        });
         this.tree = res.data;
         this.tree.forEach(async element => {
           this.getTree(element);
@@ -144,7 +158,7 @@ export default {
     }
   },
   async created() {
-    console.log("start");
+    this.getTreeHead();
   },
   computed: {}
 };

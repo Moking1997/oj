@@ -1,0 +1,16 @@
+
+GET http://localhost:5757/api/problems/tags HTTP/1.1
+### 
+POST http://localhost:5757/api/problems/tags/add HTTP/1.1
+Content-Type: application/json
+
+{
+    "label":"cc"
+}
+###
+POST http://localhost:5757/api/problems/catalogs/detele HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":13
+}

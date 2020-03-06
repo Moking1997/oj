@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    default-active="2"
+    default-active="1"
     class="el-menu-vertical-demo"
     background-color="#545c64"
     @select="selectEvent"
@@ -8,16 +8,12 @@
     active-text-color="#ffd04b"
   >
     <el-menu-item index="1">
-      <i class="el-icon-menu"></i>
+      <i class="el-icon-user"></i>
       <span slot="title">用户管理</span>
     </el-menu-item>
     <el-menu-item index="2">
-      <i class="el-icon-menu"></i>
+      <i class="el-icon-collection-tag"></i>
       <span slot="title">知识点管理</span>
-    </el-menu-item>
-    <el-menu-item index="3">
-      <i class="el-icon-setting"></i>
-      <span slot="title">导航3</span>
     </el-menu-item>
   </el-menu>
 </template>

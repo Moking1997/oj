@@ -26,7 +26,7 @@ export default {
       this.admin = true;
     },
     intoHome() {
-      this.$router.push({ path: "/index" });
+      this.$router.push({ path: "/home" });
       this.admin = false;
     }
   },

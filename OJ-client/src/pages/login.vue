@@ -50,7 +50,7 @@ export default {
             this.logining = true;
             sessionStorage.setItem("token", res.token);
             sessionStorage.setItem("limit", res.limit);
-            this.$router.push({ path: "/index" });
+            this.$router.push({ path: "/home" });
             this.$message.success("登入成功");
           } else if (res.state == 1) {
             this.$message.error("该用户不存在");

@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/pages/index'
+import Home from '@/router/home'
 import Login from '@/pages/login'
 import Admin from '@/router/admin'
 
 Vue.use(Router)
-
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const router = new Router({
   routes: [
     {
@@ -17,11 +20,7 @@ const router = new Router({
       name: 'login',
       component: Login
     },
-    {
-      path: '/index',
-      name: 'index',
-      component: Index
-    },
+    Home.index,
     Admin.index,
   ]
 })
