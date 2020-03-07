@@ -13,6 +13,9 @@ Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 
+import { timestampToTime } from '@/js/filter'
+Vue.filter('timestampToTime', timestampToTime)
+
 new Vue({
   el: '#app',
   router,
@@ -20,3 +23,4 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+

@@ -17,6 +17,7 @@ router.post('/users/detele', controllers.user.index.usersDetele)
 router.post('/users/edit', controllers.user.index.usersEdit)
 
 // 题目相关
+router.get('/problem', controllers.problems.index.problme)
 router.get('/problems', controllers.problems.index.problmes)
 // router.post('/problems/catalogs/add', controllers.problems.index.catalogsAdd)
 // router.post('/problems/catalogs/detele', controllers.problems.index.catalogsDetele)

@@ -42,7 +42,7 @@ export default {
       } else if (key == 2) {
         this.$router.push({ path: "/home/private" });
       } else {
-        let catalogs = key.slice(2, 3);
+        let catalogs = key.slice(2);
         let params = {
           currentPage: this.problems.currentPage,
           catalog: catalogs,

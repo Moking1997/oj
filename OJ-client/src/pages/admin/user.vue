@@ -11,8 +11,8 @@
         </el-form-item>
         <el-form-item label="权限" :label-width="formLabelWidth">
           <el-select v-model="form.limit" placeholder="请选择用户权限">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="2" value="2"></el-option>
+            <el-option label="管理员" value="1"></el-option>
+            <el-option label="普通用户" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -27,9 +27,16 @@
     <el-table :data="users" style="width: 100%">
       <el-table-column label="用户名" prop="name"></el-table-column>
       <el-table-column label="密码" prop="password"></el-table-column>
-      <el-table-column label="权限" prop="limit"></el-table-column>
+      <el-table-column label="权限" prop="limit">
+        <template slot-scope="scope">
+          <el-tag
+            :type="scope.row.limit == '1' ? 'danger' : 'primary'"
+            disable-transitions
+          >{{scope.row.limit| tagFilters}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column align="right">
-        <template slot="header" slot-scope="scope">
+        <template slot="header">
           <el-input v-model="search" size="mini" placeholder="输入用户名搜索" />
         </template>
         <template slot-scope="scope">
@@ -143,6 +150,12 @@ export default {
   watch: {
     search: function() {
       this.getUser();
+    }
+  },
+  filters: {
+    tagFilters: function(value) {
+      if (value == 1) return "管理员";
+      return "普通用户";
     }
   },
   created() {

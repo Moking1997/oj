@@ -1,4 +1,6 @@
 
+GET http://localhost:5757/api/problem?&id=1009 HTTP/1.1
+###
 GET http://localhost:5757/api/problems?&catalog=2 HTTP/1.1
 ### 
 POST http://localhost:5757/api/problems/catalogs/add HTTP/1.1

@@ -2,7 +2,7 @@ import Home from '@/pages/home/index'
 import Private from '@/pages/home/private'
 import Commonality from '@/pages/home/commonality'
 
-const index = {
+const home = {
     path: '/home',
     component: Home,
     children: [
@@ -11,7 +11,5 @@ const index = {
         { path: 'private', component: Private },
     ]
 }
-const home = {
-    index
-}
+
 export default home

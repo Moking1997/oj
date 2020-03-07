@@ -48,6 +48,8 @@ export default {
           let { data: res } = await _self.$http.post(url, this.form);
           if (res.state == 0) {
             this.logining = true;
+            sessionStorage.setItem("id", res.id);
+            sessionStorage.setItem("name", res.name);
             sessionStorage.setItem("token", res.token);
             sessionStorage.setItem("limit", res.limit);
             this.$router.push({ path: "/home" });

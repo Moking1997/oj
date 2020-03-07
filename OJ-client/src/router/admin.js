@@ -2,7 +2,7 @@ import Admin from '@/pages/admin/index'
 import User from '@/pages/admin/user'
 import Knowledge from '@/pages/admin/knowledge'
 
-const index = {
+const admin = {
     path: '/admin',
     component: Admin,
     children: [
@@ -11,7 +11,5 @@ const index = {
         { path: 'knowledge', component: Knowledge },
     ]
 }
-const admin = {
-    index
-}
+
 export default admin

@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/router/home'
 import Login from '@/pages/login'
+
+import Home from '@/router/home'
 import Admin from '@/router/admin'
+import Problem from '@/router/problem'
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -20,8 +22,9 @@ const router = new Router({
       name: 'login',
       component: Login
     },
-    Home.index,
-    Admin.index,
+    Home,
+    Admin,
+    Problem
   ]
 })
 // 挂载路由导航守卫

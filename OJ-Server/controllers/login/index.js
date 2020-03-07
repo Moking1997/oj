@@ -24,7 +24,7 @@ async function loginCheck(ctx) {
             let expires = 7 * 86400 * 1000 // 设置 token 过期时间一周
             let token_expires = Math.floor((Date.now() + expires) / 1000)
 
-            let u = await mysql('user_table').where({
+            let data = await mysql('user_table').where({
                 'name': name,
                 'password': password,
             }).update({
@@ -33,6 +33,8 @@ async function loginCheck(ctx) {
             })
 
             ctx.body = {
+                'id': user.id,
+                'name': user.name,
                 'state': 0,
                 'msg': '登入成功',
                 'token': token,

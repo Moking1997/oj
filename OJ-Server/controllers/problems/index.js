@@ -1,5 +1,16 @@
 const { mysql } = require('../../mysql')
 
+async function problme(ctx) {
+    let { id = 1006 } = ctx.request.query
+    const data = await mysql('problem').where({
+        problem_id: id
+    })
+
+    ctx.body = {
+        'data': data,
+        'code': 0
+    }
+}
 async function problmes(ctx) {
     let { catalog = 0, tag = '', type = '', currentPage = 1, limit = 10 } = ctx.request.query
     let offset = (currentPage - 1) * limit;
@@ -63,6 +74,7 @@ async function problmesDetele(ctx) {
 }
 
 module.exports = {
+    problme,
     problmes,
     problmesAdd,
     problmesDetele
