@@ -31,4 +31,9 @@ router.post('/problems/catalogs/detele', controllers.problems.catalogs.catalogsD
 router.get('/problems/tags', controllers.problems.tags.tags)
 router.post('/problems/tags/add', controllers.problems.tags.tagsAdd)
 router.post('/problems/tags/detele', controllers.problems.tags.tagsDetele)
+
+// 课程分类相关
+router.get('/course', controllers.course.index.course)
+router.post('/course/add', controllers.course.index.courseAdd)
+router.post('/course/detele', controllers.course.index.courseDetele)
 module.exports = router

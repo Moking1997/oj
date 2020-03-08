@@ -22,6 +22,7 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Aside from "@/pages/home/aside";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "home",
@@ -32,6 +33,12 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    ...mapActions(["setProblems", "setKonwledge"])
+  },
+  created() {
+    this.setKonwledge();
   }
 };
 </script>

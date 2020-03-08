@@ -111,7 +111,7 @@ export default {
   watch: {},
   filters: {
     tagFilters: function(value, filter) {
-      if (filter) {
+      if (typeof filter.get == "function") {
         return filter.get(Number(value));
       }
       return value;

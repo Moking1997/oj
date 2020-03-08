@@ -19,10 +19,15 @@
         :key="catalog.id"
       >{{catalog.label}}</el-menu-item>
     </el-submenu>
-    <el-menu-item index="2">
-      <i class="el-icon-collection-tag"></i>
-      <span slot="title">私有题库</span>
-    </el-menu-item>
+    <el-submenu index="2">
+      <template slot="title">
+        <i class="el-icon-collection-tag"></i>
+        <span slot="title">私有题库</span>
+      </template>
+      <el-menu-item index="2-0">
+        <el-button type="primary" @click="toAdd">新建课程</el-button>
+      </el-menu-item>
+    </el-submenu>
   </el-menu>
 </template>
 
@@ -53,6 +58,11 @@ export default {
     },
     handleOpen(key, keyPath) {
       this.selectEvent(key, keyPath);
+    },
+    toAdd() {
+      this.$router.push({
+        path: "/home/private/add"
+      });
     },
     ...mapActions(["setProblems"])
   },

@@ -65,10 +65,7 @@ export default {
     }
   },
   created() {
-    // this.getTreeHead();
-    this.setKonwledge();
-    // this.tree = this.konwledges;
-    // console.log(this.konwledges);
+    // this.setKonwledge();
   }
 };
 </script>

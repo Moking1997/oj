@@ -1,0 +1,20 @@
+
+GET http://localhost:5757/api/course?tearcher_id=8 HTTP/1.1
+### 
+POST http://localhost:5757/api/course/add HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "16计算机1",
+    "array": [49,50,54],
+    "tearcher_id": 8
+}
+###
+POST http://localhost:5757/api/problems/catalogs/detele HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":13
+}
+,1,2,3,
+

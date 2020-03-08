@@ -16,13 +16,13 @@
       <br />
       <input type="hidden" name="describe" v-model="problem.describe" />
       <br />题目描述:
-      <mavon-editor v-model="problem.describe" />
+      <!-- <mavon-editor v-model="problem.describe" /> -->
       <br />
       <br />输入格式:
-      <mavon-editor v-model="problem.input" />
+      <!-- <mavon-editor v-model="problem.input" /> -->
       <br />
       <br />输出格式:
-      <mavon-editor v-model="problem.output" />
+      <!-- <mavon-editor v-model="problem.output" /> -->
       <br />
       <br />输入样例:
       <el-input v-model="problem.sample_input" name="sample_input" placeholder="输入样例"></el-input>

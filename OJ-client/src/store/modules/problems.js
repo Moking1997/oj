@@ -1,21 +1,5 @@
 import http from '@/js/axios'
 import Vue from 'vue'
-const getKonwledge = async function (element) {
-    let { data: res } = await http.get("problems/catalogs", {
-        params: {
-            parentID: element.id
-        }
-    });
-    let children = res.data;
-    element.children = children
-    if (children.length != 0) {
-        element.children.forEach(async element => {
-            getKonwledge(element);
-        });
-    } else {
-        delete element.children;
-    }
-}
 
 export default {
     state: {
@@ -35,7 +19,7 @@ export default {
             state.total = params.total
             state.catalog = params.catalog
             state.problems = params.problems
-            console.log(state)
+            // console.log(state)
         },
         setTags(state, tags) {
             state.tags = tags
