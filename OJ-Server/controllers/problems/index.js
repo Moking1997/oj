@@ -12,19 +12,30 @@ async function problme(ctx) {
     }
 }
 async function problmes(ctx) {
-    let { catalog = 0, tag = '', type = '', currentPage = 1, limit = 10 } = ctx.request.query
+    let { catalog = 0, course = 0, tag = '', type = '', currentPage = 1, limit = 10 } = ctx.request.query
     let offset = (currentPage - 1) * limit;
     catalog = '%,' + catalog + ',%'
+    course = '%,' + course + ',%'
     tag = '%' + tag + '%'
     type = '%' + type + '%'
     const total = await mysql('problem').where('tags', 'like', tag)
         .andWhere('catalogs', 'like', catalog)
+        .andWhere('course', 'like', course)
         .andWhere('type', 'like', type)
+
     const data = await mysql('problem').where('tags', 'like', tag)
         .andWhere('catalogs', 'like', catalog)
+        .andWhere('course', 'like', course)
         .andWhere('type', 'like', type)
         .limit(limit)
         .offset(offset)
+    console.log("catalog", catalog)
+    console.log("course", course)
+    console.log("tag", tag)
+    console.log("offset", offset)
+    console.log("currentPage", currentPage)
+    console.log("total", total.length)
+    console.log("------")
 
     ctx.body = {
         'total': total.length,

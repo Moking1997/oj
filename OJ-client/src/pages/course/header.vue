@@ -50,6 +50,12 @@ export default {
     menu: function() {
       return this.$store.state.problems.konwledgeMenu;
     }
+    //  data: function() {
+    //   if (this.menu.indexOf(Number(val)) != -1) {
+    //     return Number(val);
+    //   }
+    //   return
+    // },
   },
   watch: {
     listCatalog(val) {
@@ -58,6 +64,8 @@ export default {
       }
     }
   },
-  created() {}
+  created() {
+    this.data = Number(this.$store.state.problems.catalog);
+  }
 };
 </script>

@@ -1,6 +1,18 @@
 <!--  -->
 <template>
-  <div>
+  <div class="content">
+    <div class="demo-input-suffix">
+      课程名称:
+      <el-input
+        style="width:200px"
+        placeholder="请输入课程名称"
+        prefix-icon="el-icon-edit"
+        v-model="title"
+      ></el-input>
+    </div>
+    <br />选择知识点:
+    <br />
+    <br />
     <div class="demo-drawer__content">
       <el-tree
         :data="tree"
@@ -15,7 +27,9 @@
           <span></span>
         </span>
       </el-tree>
-      <el-button @click="getCheckedNodes">通过 node 获取</el-button>
+      <br />
+
+      <el-button style="float:right;" @click="getCheckedNodes" type="primary">新增课程</el-button>
     </div>
   </div>
 </template>
@@ -26,31 +40,53 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
-      dialog: false
+      dialog: false,
+      title: ""
     };
   },
   methods: {
-    getCheckedNodes() {
-      let res = this.$refs.tree.getCheckedNodes();
+    async getCheckedNodes() {
+      let result = this.$refs.tree.getCheckedNodes();
       let konwleges = ",";
       let array = [];
-      let tearcher_id = window.sessionStorage.getItem(id);
-      res.forEach(element => {
+      let str = "";
+      let tearcher_id = window.sessionStorage.getItem("id");
+      result.forEach(element => {
         konwleges += element.id + ",";
+        str += element.label + "/";
         array.push(element.id);
       });
-      res.forEach(element => {
-        let str = "," + element.parentID + ",";
-        let reg = new RegExp(str, "g");
-      });
-
-      this.$http.post("course/add", {
-        title: "16计算机",
-        array: array,
-        id: id
-      });
+      if (this.title == "") {
+        this.$message.error("请输入课程名称");
+        return;
+      }
+      this.$confirm(`添加课程 ${this.title} , 是否继续?`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          let { data: res } = await this.$http.post("course/add", {
+            konwleges: str,
+            title: this.title,
+            array: array,
+            tearcher_id: tearcher_id
+          });
+          if (res.state == 0) {
+            this.$message.success("添加课程成功");
+            this.setCourses();
+          } else {
+            this.$message.error("该课程已存在");
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
-    ...mapActions(["setProblems", "setKonwledge"])
+    ...mapActions(["setProblems", "setKonwledge", "setCourses"])
   },
   computed: {
     ...mapState(["problems", "konwledge"]),
@@ -63,7 +99,7 @@ export default {
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {
-    // this.setKonwledge();
+    console.log(this.menu);
   },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {}
@@ -71,4 +107,8 @@ export default {
 </script>
 <style scoped>
 /* @import url(); 引入css类 */
+.content {
+  padding: 10px;
+  margin: 10px;
+}
 </style>

@@ -4,6 +4,7 @@ import Commonality from '@/pages/home/commonality'
 
 import CourseIndex from '@/pages/course/index'
 import CourseAdd from '@/pages/course/add'
+import CourseSet from '@/pages/course/set'
 const home = {
     path: '/home',
     component: Home,
@@ -13,8 +14,10 @@ const home = {
         {
             path: 'private', component: Private,
             children: [
+                { path: '', component: CourseIndex },
                 { path: 'index', component: CourseIndex },
                 { path: 'add', component: CourseAdd },
+                { path: 'set', component: CourseSet },
             ]
         },
     ]

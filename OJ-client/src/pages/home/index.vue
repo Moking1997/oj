@@ -35,10 +35,11 @@ export default {
     return {};
   },
   methods: {
-    ...mapActions(["setProblems", "setKonwledge"])
+    ...mapActions(["setProblems", "setKonwledge", "setCourses"])
   },
   created() {
     this.setKonwledge();
+    this.setCourses();
   }
 };
 </script>

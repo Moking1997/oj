@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     selectEvent(key, keyPath) {
-      //   console.log(key, keyPath);
       if (key == 1) {
         this.$router.push({ path: "/admin/user" });
       } else if (key == 2) {

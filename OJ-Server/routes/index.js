@@ -36,4 +36,6 @@ router.post('/problems/tags/detele', controllers.problems.tags.tagsDetele)
 router.get('/course', controllers.course.index.course)
 router.post('/course/add', controllers.course.index.courseAdd)
 router.post('/course/detele', controllers.course.index.courseDetele)
+router.post('/course/addproblem', controllers.course.index.courseAddProblem)
+router.post('/course/deteleproblem', controllers.course.index.courseDeteleProblem)
 module.exports = router

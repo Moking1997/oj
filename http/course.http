@@ -5,7 +5,7 @@ POST http://localhost:5757/api/course/add HTTP/1.1
 Content-Type: application/json
 
 {
-    "title": "16计算机1",
+    "title": "17计算机",
     "array": [49,50,54],
     "tearcher_id": 8
 }

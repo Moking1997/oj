@@ -3,12 +3,15 @@ import Vue from 'vue'
 
 export default {
     state: {
+        course: 0,
+        courses: [],
         problems: [],
+        catalog: 0,
         catalogs: [],
         konwledge: [],
         konwledgeMenu: [],
+        konwledgeHeader: [],
         tags: [],
-        catalog: 0,
         currentPage: 1,
         total: 10,
         tag: '',
@@ -17,17 +20,22 @@ export default {
         setProblems(state, params) {
             state.tag = params.tag
             state.total = params.total
+            state.currentPage = params.currentPage
+            state.course = params.course
             state.catalog = params.catalog
             state.problems = params.problems
-            // console.log(state)
         },
         setTags(state, tags) {
             state.tags = tags
         },
+        setCourses(state, courses) {
+            state.courses = courses
+        },
         setCatalog(state, catalog) {
             state.catalog = catalog
         },
-        setKonwledge(state, { konwledge, menu }) {
+        setKonwledge(state, { konwledge, menu, header }) {
+            state.konwledgeHeader = header
             state.konwledge = konwledge
             state.konwledgeMenu = menu
         },
@@ -37,8 +45,10 @@ export default {
     },
     actions: {
         async setProblems({ commit, state }, { ...params }) {
+
             let { data: res } = await http.get("problems", {
                 params: {
+                    course: params.course,
                     tag: params.tag,
                     catalog: params.catalog,
                     currentPage: params.currentPage,
@@ -51,6 +61,15 @@ export default {
         async setTags({ commit }, tags) {
             let { data: res } = await http.get("problems/tags")
             commit('setTags', res.tags)
+        },
+        async setCourses({ commit }) {
+            let id = window.sessionStorage.getItem('id')
+            let { data: res } = await http.get("course", {
+                params: {
+                    tearcher_id: id
+                }
+            })
+            commit('setCourses', res.data)
         },
         setCatalog({ commit }, catalog) {
             commit('setCatalog', catalog)
@@ -78,13 +97,14 @@ export default {
                     parentID: 0
                 }
             });
+            let header = res.data
             let konwledge = res.data
             let menu = []
             konwledge.forEach(async element => {
                 menu.push(element.id);
                 dispatch('getKonwledge', element)
             });
-            commit('setKonwledge', { konwledge: konwledge, menu: menu })
+            commit('setKonwledge', { konwledge: konwledge, menu: menu, header: header })
         },
     },
 }
