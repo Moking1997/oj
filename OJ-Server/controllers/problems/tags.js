@@ -44,13 +44,47 @@ async function tagsDetele(ctx) {
 
     ctx.body = {
         'state': 0,
-        'msg': "删除知识点成功",
+        'msg': "删除标签成功",
         'code': 0
     }
 }
 
+async function tagsEdit(ctx) {
+    const { id, label } = ctx.request.body
+    const tags = await mysql('problems_tags').where({
+        'id': id
+    })
+    const names = await mysql('problems_tags').where({
+        'label': label
+    })
+    const us = tags
+    if (tags.length == 0) {
+        ctx.body = {
+            'code': 0,
+            'state': 1,
+            'msg': '该标签不存在'
+        }
+    } else if (names.length == 1) {
+        ctx.body = {
+            'code': 0,
+            'state': 2,
+            'msg': '该标签已存在'
+        }
+    } else {
+        const u = await mysql('problems_tags').where('id', '=', id).update({
+            'label': label,
+        })
+        ctx.body = {
+            'state': 0,
+            'msg': "修改标签成功",
+            'code': 0
+        }
+    }
+
+}
 module.exports = {
     tags,
     tagsAdd,
-    tagsDetele
+    tagsDetele,
+    tagsEdit,
 }

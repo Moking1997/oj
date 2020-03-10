@@ -1,6 +1,8 @@
 <!--  -->
 <template>
   <div class="custom-tree-container">
+    <el-page-header @back="$router.go(-1)" content="知识点管理"></el-page-header>
+    <br />
     <div class="block">
       <el-row type="flex" justify="space-between">
         <el-col :span="18">

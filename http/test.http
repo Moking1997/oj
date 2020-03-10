@@ -1,4 +1,4 @@
-GET http://localhost:5757/api/index HTTP/1.1
+GET http://localhost:5757/api/problems/type HTTP/1.1
 
 ### 
 

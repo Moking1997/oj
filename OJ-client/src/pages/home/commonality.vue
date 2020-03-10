@@ -14,7 +14,6 @@
           </template>
         </el-table-column>
         <el-table-column prop="source" label="作者" width="180"></el-table-column>
-        <el-table-column prop="type" label="类型" width="180"></el-table-column>
         <el-table-column
           prop="tags"
           label="标签"
@@ -27,7 +26,10 @@
             <el-tag disable-transitions>{{scope.row.tags| tagFilters(tagFilter)}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column align="right" width="180">
+          <template slot="header" slot-scope="scope">
+            <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+          </template>
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="joinCourseButton(scope.row)">加入课程</el-button>
             <!-- <el-button size="mini" type="danger" @click="courseDelete(scope.row)">删除</el-button> -->
@@ -75,6 +77,7 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
+      search: "",
       currentPage: 1,
       form: {
         course_id: "",
@@ -123,9 +126,7 @@ export default {
     },
     handleCurrentChange(val) {
       let params = {
-        currentPage: val,
-        catalog: this.problems.catalog,
-        tag: this.problems.tag
+        currentPage: val
       };
       this.setProblems(params);
     },
@@ -154,7 +155,14 @@ export default {
       return this.$store.state.problems.courses;
     }
   },
-  watch: {},
+  watch: {
+    search: function() {
+      let params = {
+        search: this.search
+      };
+      this.setProblems(params);
+    }
+  },
   filters: {
     tagFilters: function(value, filter) {
       if (typeof filter.get == "function") {
@@ -164,7 +172,6 @@ export default {
     }
   },
   created() {
-    // this.setProblems();
     this.getTags();
   }
 };

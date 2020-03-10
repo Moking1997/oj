@@ -51,6 +51,7 @@ export default {
       let array = [];
       let str = "";
       let tearcher_id = window.sessionStorage.getItem("id");
+      let tearcher_name = window.sessionStorage.getItem("name");
       result.forEach(element => {
         konwleges += element.id + ",";
         str += element.label + "/";
@@ -70,7 +71,8 @@ export default {
             konwleges: str,
             title: this.title,
             array: array,
-            tearcher_id: tearcher_id
+            tearcher_id: tearcher_id,
+            tearcher_name: tearcher_name
           });
           if (res.state == 0) {
             this.$message.success("添加课程成功");

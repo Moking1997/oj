@@ -15,9 +15,26 @@ async function course(ctx) {
         'code': 0
     }
 }
+async function courses(ctx) {
+    const data = await mysql('problems_course')
+    ctx.body = {
+        'data': data,
+        'code': 0
+    }
+}
+async function openCourses(ctx) {
+
+    const data = await mysql('problems_course').where({
+        'open': 0
+    })
+    ctx.body = {
+        'data': data,
+        'code': 0
+    }
+}
 
 async function courseAdd(ctx) {
-    const { title, array, tearcher_id = 0, konwleges } = ctx.request.body
+    const { title, array, tearcher_id = 0, tearcher_name = '', konwleges } = ctx.request.body
     const catalog = await mysql('problems_course').where({
         'title': title,
         'tearcher_id': tearcher_id
@@ -27,7 +44,8 @@ async function courseAdd(ctx) {
         const id = await mysql('problems_course').insert({
             'title': title,
             'tearcher_id': tearcher_id,
-            'konwleges': konwleges
+            'konwleges': konwleges,
+            'tearcher_name': tearcher_name
         })
         for (let i = 0; i < array.length; i++) {
             let query = '%,' + array[i] + ',%'
@@ -70,7 +88,22 @@ async function courseAdd(ctx) {
 
 }
 
-
+async function courseOpen(ctx) {
+    let { open = 1, id } = ctx.request.body
+    if (open == 1) {
+        open = 0
+    } else {
+        open = 1
+    }
+    const course = await mysql('problems_course').where('id', '=', id).update({
+        'open': open,
+    })
+    ctx.body = {
+        'state': 0,
+        'msg': "更改是否公开成功",
+        'code': 0
+    }
+}
 async function courseDetele(ctx) {
     const { title, id } = ctx.request.body
     const course = await mysql('problems_course').where('id', '=', id).delete()
@@ -126,11 +159,36 @@ async function courseDeteleProblem(ctx) {
         'code': 0
     }
 }
+async function joinCourse(ctx) {
+    const { tearcher_id, course_id, title, konwleges, tearcher_name } = ctx.request.body
+    // console.log(tearcher_id, course_id, title, konwleges, tearcher_name)
+    const id = await mysql('problems_course').insert({
+        'title': title,
+        'tearcher_id': tearcher_id,
+        'konwleges': konwleges,
+        'tearcher_name': tearcher_name
+    })
+    let query = '%,' + course_id + ',%'
+    let p = await mysql('problem')
+        .where('course', 'like', query)
+        .update({
+            'course': mysql.raw(`REPLACE(course, ',${course_id},' , ',${course_id},${id},')`)
+        })
+    ctx.body = {
+        'state': 0,
+        'msg': "加入成功",
+        'code': 0
+    }
+}
 
 module.exports = {
     course,
+    courses,
     courseAdd,
+    courseOpen,
+    openCourses,
     courseDetele,
     courseAddProblem,
-    courseDeteleProblem
+    courseDeteleProblem,
+    joinCourse
 }

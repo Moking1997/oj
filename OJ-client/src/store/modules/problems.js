@@ -3,6 +3,7 @@ import Vue from 'vue'
 
 export default {
     state: {
+        search: '',
         course: 0,
         courses: [],
         problems: [],
@@ -15,18 +16,28 @@ export default {
         currentPage: 1,
         total: 10,
         tag: '',
+        type: '',
+        types: [],
+        personal: 0
     },
     mutations: {
         setProblems(state, params) {
             state.tag = params.tag
+            state.type = params.type
+            state.search = params.search
             state.total = params.total
-            state.currentPage = params.currentPage
             state.course = params.course
             state.catalog = params.catalog
+            state.personal = params.personal
             state.problems = params.problems
+            state.currentPage = params.currentPage
+
         },
         setTags(state, tags) {
             state.tags = tags
+        },
+        setTypes(state, types) {
+            state.types = types
         },
         setCourses(state, courses) {
             state.courses = courses
@@ -45,13 +56,24 @@ export default {
     },
     actions: {
         async setProblems({ commit, state }, { ...params }) {
-
+            let {
+                tag = state.tag,
+                search = state.search,
+                type = state.type,
+                course = state.course,
+                currentPage = 1,
+                catalog = state.catalog,
+                personal = state.personal,
+            } = params
             let { data: res } = await http.get("problems", {
                 params: {
-                    course: params.course,
-                    tag: params.tag,
-                    catalog: params.catalog,
-                    currentPage: params.currentPage,
+                    type: type,
+                    search: search,
+                    course: course,
+                    tag: tag,
+                    catalog: catalog,
+                    personal: personal,
+                    currentPage: currentPage,
                 }
             })
             params.problems = res.problems
@@ -61,6 +83,10 @@ export default {
         async setTags({ commit }, tags) {
             let { data: res } = await http.get("problems/tags")
             commit('setTags', res.tags)
+        },
+        async setTypes({ commit }, types) {
+            let { data: res } = await http.get("problems/type")
+            commit('setTypes', res.type)
         },
         async setCourses({ commit }) {
             let id = window.sessionStorage.getItem('id')

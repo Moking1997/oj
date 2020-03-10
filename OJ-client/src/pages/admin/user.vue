@@ -36,8 +36,8 @@
         </template>
       </el-table-column>
       <el-table-column align="right">
-        <template slot="header">
-          <el-input v-model="search" size="mini" placeholder="输入用户名搜索" />
+        <template slot="header" slot-scope="scope">
+          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
         </template>
         <template slot-scope="scope">
           <el-button size="mini" @click="userEdit(scope.$index, scope.row)">编辑</el-button>
@@ -64,6 +64,7 @@ export default {
       edit: false,
       dialogFormVisible: false,
       form: {
+        id: "",
         name: "",
         password: "",
         limit: ""
@@ -100,8 +101,10 @@ export default {
         this.getUser();
         this.$message.success("修改成功");
         this.dialogFormVisible = false;
+      } else if (res.state == 2) {
+        this.$message.error("该用户名已存在");
       } else if (res.state == 1) {
-        this.$message.error("该用户名不存在");
+        this.$message.error("该用户不存在");
       }
     },
     async getUser() {

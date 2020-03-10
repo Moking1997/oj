@@ -1,9 +1,13 @@
 <template>
   <el-row>
-    个人课程
     <Headers />
     <el-col :span="priview.pro">
-      <el-table ref="filterTable" :data="problems.problems" style="width: 100%">
+      <el-table
+        ref="filterTable"
+        :data="problems.problems"
+        style="width: 100%"
+        @filter-change="handleFilterChange"
+      >
         <el-table-column prop="problem_id" label="标号" width="180"></el-table-column>
         <el-table-column prop="title" label="标题" width="250">
           <template slot-scope="scope">
@@ -19,16 +23,26 @@
         <el-table-column
           prop="tags"
           label="标签"
-          width="100"
+          column-key="tags"
           :filters="tags"
           :filter-method="filterTag"
+          :filter-multiple="false"
           filter-placement="bottom-end"
         >
           <template slot-scope="scope">
             <el-tag disable-transitions>{{scope.row.tags| tagFilters(tagFilter)}}</el-tag>
+            <el-tag
+              disable-transitions
+              v-for="tag in tagsTotag(scope.row.tags)"
+              :key="tag.id"
+            >{{tag.id | tagFilters(tagFilter)}}</el-tag>
+            <!-- <el-tag disable-transitions>{{scope.row.tags| tagFilters(tagFilter)}}</el-tag> -->
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column align="right" width="180">
+          <template slot="header" slot-scope="scope">
+            <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+          </template>
           <template slot-scope="scope">
             <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
             <el-button size="mini" type="danger" @click="courseDelete(scope.row)">删除</el-button>
@@ -57,6 +71,8 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
+      filterTotal: [],
+      search: "",
       course_id: 0,
       currentPage: 1,
       tags: [],
@@ -74,6 +90,9 @@ export default {
     Priview
   },
   methods: {
+    tagsTotag(tags) {
+      return this.tests;
+    },
     problemPriview(id) {
       this.priview.pro = 15;
       this.priview.pri = 9;
@@ -83,7 +102,15 @@ export default {
       this.priview.pri = span;
       this.priview.pro = 24 - span;
     },
-    filterTag(value, row) {
+    handleFilterChange(val) {
+      console.log(val.tags[0]);
+      let params = {
+        currentPage: 1,
+        tag: val.tags[0]
+      };
+      this.setProblems(params);
+    },
+    filterTag(value, row, column) {
       return row.tags == value;
     },
     handleCurrentChange(val) {
@@ -133,7 +160,7 @@ export default {
         });
     },
     getProblems(page) {
-      let currentPage = page || this.problems.currentPage;
+      let currentPage = page || 1;
       let catalog = this.problems.catalog;
       let params = {
         course: this.course_id,
@@ -149,7 +176,14 @@ export default {
   computed: {
     ...mapState(["problems"])
   },
-  watch: {},
+  watch: {
+    search: function() {
+      let params = {
+        search: this.search
+      };
+      this.setProblems(params);
+    }
+  },
   filters: {
     tagFilters: function(value, filter) {
       if (typeof filter.get == "function") {

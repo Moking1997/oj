@@ -31,11 +31,22 @@ router.post('/problems/catalogs/detele', controllers.problems.catalogs.catalogsD
 router.get('/problems/tags', controllers.problems.tags.tags)
 router.post('/problems/tags/add', controllers.problems.tags.tagsAdd)
 router.post('/problems/tags/detele', controllers.problems.tags.tagsDetele)
+router.post('/problems/tags/edit', controllers.problems.tags.tagsEdit)
+
+// 题目类型相关
+router.get('/problems/type', controllers.problems.type.type)
+router.post('/problems/type/add', controllers.problems.type.typeAdd)
+router.post('/problems/type/detele', controllers.problems.type.typeDetele)
+router.post('/problems/type/edit', controllers.problems.type.typeEdit)
 
 // 课程分类相关
 router.get('/course', controllers.course.index.course)
+router.get('/courses', controllers.course.index.courses)
+router.get('/openCourses', controllers.course.index.openCourses)
+router.post('/course/open', controllers.course.index.courseOpen)
 router.post('/course/add', controllers.course.index.courseAdd)
 router.post('/course/detele', controllers.course.index.courseDetele)
+router.post('/course/joinCourse', controllers.course.index.joinCourse)
 router.post('/course/addproblem', controllers.course.index.courseAddProblem)
 router.post('/course/deteleproblem', controllers.course.index.courseDeteleProblem)
 module.exports = router

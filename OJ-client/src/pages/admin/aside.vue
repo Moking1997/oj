@@ -15,6 +15,18 @@
       <i class="el-icon-collection-tag"></i>
       <span slot="title">知识点管理</span>
     </el-menu-item>
+    <el-menu-item index="3">
+      <i class="el-icon-help"></i>
+      <span slot="title">类型管理</span>
+    </el-menu-item>
+    <el-menu-item index="4">
+      <i class="el-icon-price-tag"></i>
+      <span slot="title">标签管理</span>
+    </el-menu-item>
+    <el-menu-item index="5">
+      <i class="el-icon-notebook-1"></i>
+      <span slot="title">课程列表</span>
+    </el-menu-item>
   </el-menu>
 </template>
 
@@ -29,6 +41,12 @@ export default {
         this.$router.push({ path: "/admin/user" });
       } else if (key == 2) {
         this.$router.push({ path: "/admin/knowledge" });
+      } else if (key == 3) {
+        this.$router.push({ path: "/admin/type" });
+      } else if (key == 4) {
+        this.$router.push({ path: "/admin/tags" });
+      } else if (key == 5) {
+        this.$router.push({ path: "/admin/course" });
       }
     }
   },

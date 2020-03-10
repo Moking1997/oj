@@ -19,6 +19,10 @@
         :key="catalog.id"
       >{{catalog.label}}</el-menu-item>
     </el-submenu>
+    <el-menu-item index="4">
+      <i class="el-icon-notebook-1"></i>
+      <span slot="title" @click="$router.push('/home/openCourse')">公共课程</span>
+    </el-menu-item>
     <el-submenu index="2">
       <template slot="title">
         <i class="el-icon-collection-tag"></i>
@@ -35,6 +39,10 @@
         :key="course.id"
       >{{course.title}}</el-menu-item>
     </el-submenu>
+    <el-menu-item index="3">
+      <i class="el-icon-setting"></i>
+      <span slot="title" @click="$router.push('/home/setting')">信息设置</span>
+    </el-menu-item>
   </el-menu>
 </template>
 
@@ -51,14 +59,14 @@ export default {
         let catalogs = 0;
         if (key != 1) {
           catalogs = key.slice(2);
-          let params = {
-            course: 0,
-            currentPage: 1,
-            catalog: catalogs,
-            tag: this.problems.tag
-          };
-          this.setProblems(params);
         }
+        let params = {
+          course: 0,
+          currentPage: 1,
+          catalog: catalogs,
+          tag: this.problems.tag
+        };
+        this.setProblems(params);
         this.$router.push({
           path: "/home/commonality",
           query: {

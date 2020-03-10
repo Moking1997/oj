@@ -43,8 +43,11 @@ async function usersAdd(ctx) {
 
 }
 async function usersEdit(ctx) {
-    const { name, password, limit } = ctx.request.body
+    const { id, name, password, limit } = ctx.request.body
     const users = await mysql('user_table').where({
+        'id': id
+    })
+    const names = await mysql('user_table').where({
         'name': name
     })
     const us = users
@@ -52,11 +55,16 @@ async function usersEdit(ctx) {
         ctx.body = {
             'code': 0,
             'state': 1,
-            'msg': '用户名不存在'
+            'msg': '该用户不存在'
+        }
+    } else if (names.length == 1) {
+        ctx.body = {
+            'code': 0,
+            'state': 2,
+            'msg': '该用户名已存在'
         }
     } else {
-
-        const u = await mysql('user_table').where('name', '=', name).update({
+        const u = await mysql('user_table').where('id', '=', id).update({
             'name': name,
             'password': password,
             'limit': limit
