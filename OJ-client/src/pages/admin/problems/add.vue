@@ -107,8 +107,8 @@ export default {
   },
   methods: {
     async issueProblem() {
+      console.log(this.problem);
       let { data: res } = await this.$http.post("problem/add", this.problem);
-      console.log(res);
       if (res.state == 0) {
         this.$message.success("添加题目成功");
       } else {
@@ -127,7 +127,7 @@ export default {
     getType(val) {
       this.problem.type = val;
     },
-    ...mapActions(["setTags"])
+    ...mapActions(["setTags", "setTypes", "setKonwledge"])
   },
   computed: {
     catalogsTree: function() {
@@ -153,6 +153,8 @@ export default {
   //生命周期 - 创建完成（访问当前this实例）
   created() {
     this.setTags();
+    this.setTypes();
+    this.setKonwledge();
     this.problem.source = window.sessionStorage.getItem("name");
   },
 

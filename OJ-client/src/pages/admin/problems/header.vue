@@ -12,7 +12,7 @@
         <el-checkbox v-model="privatechecked">查看私人题目</el-checkbox>
       </el-col>
       <el-col :span="12" style="text-align:right;">
-        <router-link to="/problem/add">
+        <router-link to="/admin/problems/add">
           <el-button type="primary">新建题目</el-button>
         </router-link>
         <el-button type="success">批量添加题目</el-button>
@@ -32,8 +32,8 @@ export default {
   data() {
     return {
       privatechecked: false,
-      activeType: "",
-      data: 0
+      data: 0,
+      activeType: ""
     };
   },
   methods: {
@@ -41,9 +41,7 @@ export default {
       let catalog = val[val.length - 1] | 0;
       let params = {
         currentPage: 1,
-        catalog: catalog,
-        tag: this.problems.tag,
-        course: this.problems.course
+        catalog: catalog
       };
       this.setProblems(params);
     },
@@ -87,8 +85,6 @@ export default {
       this.setProblems(params);
     }
   },
-  created() {
-    this.data = Number(this.$store.state.problems.catalog);
-  }
+  created() {}
 };
 </script>

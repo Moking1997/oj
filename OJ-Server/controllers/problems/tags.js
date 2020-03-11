@@ -11,7 +11,7 @@ async function tags(ctx) {
 }
 
 async function tagsAdd(ctx) {
-    const { label } = ctx.request.body
+    const { label } = ctx.request.fields
     const tags = await mysql('problems_tags').where({
         'label': label
     })
@@ -39,7 +39,7 @@ async function tagsAdd(ctx) {
 
 
 async function tagsDetele(ctx) {
-    const { label, id } = ctx.request.body
+    const { label, id } = ctx.request.fields
     const tags = await mysql('problems_tags').where('id', '=', id).delete()
 
     ctx.body = {
@@ -50,7 +50,7 @@ async function tagsDetele(ctx) {
 }
 
 async function tagsEdit(ctx) {
-    const { id, label } = ctx.request.body
+    const { id, label } = ctx.request.fields
     const tags = await mysql('problems_tags').where({
         'id': id
     })

@@ -25,18 +25,16 @@
           label="标签"
           column-key="tags"
           :filters="tags"
-          :filter-method="filterTag"
           :filter-multiple="false"
           filter-placement="bottom-end"
         >
           <template slot-scope="scope">
-            <el-tag disable-transitions>{{scope.row.tags| tagFilters(tagFilter)}}</el-tag>
             <el-tag
               disable-transitions
               v-for="tag in tagsTotag(scope.row.tags)"
+              :type="tag === '11' ? 'danger' : 'primary'"
               :key="tag.id"
-            >{{tag.id | tagFilters(tagFilter)}}</el-tag>
-            <!-- <el-tag disable-transitions>{{scope.row.tags| tagFilters(tagFilter)}}</el-tag> -->
+            >{{tag | tagFilters(tagFilter)}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="right" width="180">
@@ -44,7 +42,7 @@
             <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
           </template>
           <template slot-scope="scope">
-            <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
+            <el-button size="mini" @click="toProblem(scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="courseDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -91,7 +89,10 @@ export default {
   },
   methods: {
     tagsTotag(tags) {
-      return this.tests;
+      var array = tags.split(",").filter(Boolean);
+      let i = array.indexOf("0");
+      array.splice(i, 1);
+      return array;
     },
     problemPriview(id) {
       this.priview.pro = 15;
@@ -103,15 +104,14 @@ export default {
       this.priview.pro = 24 - span;
     },
     handleFilterChange(val) {
-      console.log(val.tags[0]);
+      let tag = val.tags[0] | 0;
+      console.log(tag);
       let params = {
+        course: this.course_id,
         currentPage: 1,
-        tag: val.tags[0]
+        tag: tag
       };
       this.setProblems(params);
-    },
-    filterTag(value, row, column) {
-      return row.tags == value;
     },
     handleCurrentChange(val) {
       this.getProblems(val);
@@ -158,6 +158,14 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    toProblem(row) {
+      this.$router.push({
+        path: "/problem/edit",
+        query: {
+          id: row.problem_id
+        }
+      });
     },
     getProblems(page) {
       let currentPage = page || 1;

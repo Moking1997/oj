@@ -15,7 +15,7 @@
         <router-link to="/problem/add">
           <el-button type="primary">新建题目</el-button>
         </router-link>
-        <el-button type="success">批量添加题库集</el-button>
+        <el-button type="success">批量添加题目</el-button>
       </el-col>
     </el-row>
     <br />
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     getCheckedNodes(val) {
-      let catalog = val[val.length - 1];
+      let catalog = val[val.length - 1] | 0;
       let params = {
         currentPage: 1,
         catalog: catalog

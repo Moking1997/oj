@@ -15,7 +15,7 @@ export default {
         tags: [],
         currentPage: 1,
         total: 10,
-        tag: '',
+        tag: 0,
         type: '',
         types: [],
         personal: 0

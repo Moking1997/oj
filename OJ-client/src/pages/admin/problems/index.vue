@@ -42,7 +42,8 @@
           </template>
           <template slot-scope="scope">
             <el-button size="mini" @click="toProblem(scope.row)">编辑</el-button>
-            <el-button size="mini" type="primary" @click="joinCourseButton(scope.row)">加入课程</el-button>
+            <el-button size="mini" type="danger" @click="deteleProblem(scope.row)">删除</el-button>
+            <!-- <el-button size="mini" type="primary" @click="joinCourseButton(scope.row)">加入课程</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -55,7 +56,7 @@
         :total="problems.total"
       ></el-pagination>
 
-      <el-dialog title="选择课程" :visible.sync="joinCourseVisible">
+      <!-- <el-dialog title="选择课程" :visible.sync="joinCourseVisible">
         <el-form :model="form">
           <el-form-item label="课程名称">
             <el-select v-model="form.course_id" placeholder="请选择课程">
@@ -72,7 +73,7 @@
           <el-button @click="joinCourseVisible = false">取 消</el-button>
           <el-button type="primary" @click="joinCourse()">确 定</el-button>
         </div>
-      </el-dialog>
+      </el-dialog>-->
     </el-col>
     <el-col :span="priview.pri">
       <Priview :priview="priview" :pri_problem="pri_problem" @childFn="closePriview" />
@@ -80,8 +81,8 @@
   </el-row>
 </template>
 <script>
-import Headers from "@/pages/home/header";
-import Priview from "@/components/problem/priview";
+import Headers from "@/pages/admin/problems/header";
+import Priview from "@/pages/admin/problems/priview";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -109,6 +110,30 @@ export default {
     Priview
   },
   methods: {
+    async deteleProblem(row) {
+      this.$confirm("此操作将永久删除该题目, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          let { data: res } = await this.$http.post("problem/detele", row);
+          if (res.state == 0) {
+            this.$message.success("删除题目成功");
+            this.dialogFormVisible = false;
+            this.setProblems();
+            console.log(res);
+          } else if (res.state == 1) {
+            this.$message.error("该题目不存在");
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
     tagsTotag(tags) {
       var array = tags.split(",").filter(Boolean);
       let i = array.indexOf("0");
@@ -130,7 +155,7 @@ export default {
     },
     toProblem(row) {
       this.$router.push({
-        path: "/problem/edit",
+        path: "/admin/problems/edit",
         query: {
           id: row.problem_id
         }
@@ -206,6 +231,7 @@ export default {
   },
   created() {
     this.getTags();
+    this.setProblems();
   }
 };
 </script>

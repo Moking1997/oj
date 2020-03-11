@@ -41,6 +41,7 @@ export default {
     this.setKonwledge();
     this.setCourses();
     this.setTypes();
+    this.setProblems();
   }
 };
 </script>

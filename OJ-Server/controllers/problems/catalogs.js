@@ -13,7 +13,7 @@ async function catalogs(ctx) {
 }
 
 async function catalogsAdd(ctx) {
-    const { label, parentID = 0 } = ctx.request.body
+    const { label, parentID = 0 } = ctx.request.fields
     const catalog = await mysql('problems_catalogs').where({
         'label': label,
         'parentID': parentID
@@ -43,7 +43,7 @@ async function catalogsAdd(ctx) {
 
 
 async function catalogsDetele(ctx) {
-    const { label, id } = ctx.request.body
+    const { label, id } = ctx.request.fields
     const catalogs = await mysql('problems_catalogs').where('id', '=', id).delete()
 
     ctx.body = {

@@ -2,7 +2,7 @@ const { mysql } = require('../../mysql')
 const guld = require('uuid/v4')
 
 async function loginCheck(ctx) {
-    const { name, password } = ctx.request.body
+    const { name, password } = ctx.request.fields
     const users = await mysql('user_table').where({
         'name': name
     })

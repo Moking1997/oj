@@ -11,6 +11,10 @@
       <i class="el-icon-user"></i>
       <span slot="title">用户管理</span>
     </el-menu-item>
+    <el-menu-item index="6">
+      <i class="el-icon-notebook-2"></i>
+      <span slot="title">题目管理</span>
+    </el-menu-item>
     <el-menu-item index="2">
       <i class="el-icon-collection-tag"></i>
       <span slot="title">知识点管理</span>
@@ -47,6 +51,8 @@ export default {
         this.$router.push({ path: "/admin/tags" });
       } else if (key == 5) {
         this.$router.push({ path: "/admin/course" });
+      } else if (key == 6) {
+        this.$router.push({ path: "/admin/problems" });
       }
     }
   },

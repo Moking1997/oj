@@ -1,11 +1,15 @@
 const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
 const config = require('./config')
+const body = require('koa-better-body')
 
 const app = new Koa()
 
 const router = require('./routes')
-app.use(bodyParser())
+
+let obj = body({ uploadDir: 'upload' })
+app.use(obj)
+// app.use(bodyParser())
 
 app.use(async (ctx, next) => {
 

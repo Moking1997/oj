@@ -34,7 +34,7 @@ async function openCourses(ctx) {
 }
 
 async function courseAdd(ctx) {
-    const { title, array, tearcher_id = 0, tearcher_name = '', konwleges } = ctx.request.body
+    const { title, array, tearcher_id = 0, tearcher_name = '', konwleges } = ctx.request.fields
     const catalog = await mysql('problems_course').where({
         'title': title,
         'tearcher_id': tearcher_id
@@ -89,7 +89,7 @@ async function courseAdd(ctx) {
 }
 
 async function courseOpen(ctx) {
-    let { open = 1, id } = ctx.request.body
+    let { open = 1, id } = ctx.request.fields
     if (open == 1) {
         open = 0
     } else {
@@ -105,7 +105,7 @@ async function courseOpen(ctx) {
     }
 }
 async function courseDetele(ctx) {
-    const { title, id } = ctx.request.body
+    const { title, id } = ctx.request.fields
     const course = await mysql('problems_course').where('id', '=', id).delete()
 
     ctx.body = {
@@ -115,7 +115,7 @@ async function courseDetele(ctx) {
     }
 }
 async function courseAddProblem(ctx) {
-    const { problem_id, course_id } = ctx.request.body
+    const { problem_id, course_id } = ctx.request.fields
     let query = '%,' + course_id + ',%'
     let p = await mysql('problem')
         .where('course', 'like', query)
@@ -144,7 +144,7 @@ async function courseAddProblem(ctx) {
     }
 }
 async function courseDeteleProblem(ctx) {
-    const { problem_id, course_id } = ctx.request.body
+    const { problem_id, course_id } = ctx.request.fields
 
     let p = await mysql('problem')
         .where({
@@ -160,7 +160,7 @@ async function courseDeteleProblem(ctx) {
     }
 }
 async function joinCourse(ctx) {
-    const { tearcher_id, course_id, title, konwleges, tearcher_name } = ctx.request.body
+    const { tearcher_id, course_id, title, konwleges, tearcher_name } = ctx.request.fields
     // console.log(tearcher_id, course_id, title, konwleges, tearcher_name)
     const id = await mysql('problems_course').insert({
         'title': title,

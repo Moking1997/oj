@@ -1,83 +1,7 @@
 <template>
-  <el-row>
-    <Headers />
-    <el-col :span="priview.pro">
-      <el-table
-        ref="filterTable"
-        :data="problems.problems"
-        style="width: 100%"
-        @filter-change="handleFilterChange"
-      >
-        <el-table-column prop="problem_id" label="标号" width="180"></el-table-column>
-        <el-table-column prop="title" label="标题" width="250">
-          <template slot-scope="scope">
-            <el-button
-              @click="problemPriview(scope.row)"
-              type="text"
-              size="small"
-            >{{scope.row.title}}</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column prop="source" label="作者" width="180"></el-table-column>
-        <el-table-column
-          prop="tags"
-          label="标签"
-          column-key="tags"
-          :filters="tags"
-          :filter-multiple="false"
-          filter-placement="bottom-end"
-        >
-          <template slot-scope="scope">
-            <el-tag
-              disable-transitions
-              v-for="tag in tagsTotag(scope.row.tags)"
-              :key="tag.id"
-              :type="tag === '11' ? 'danger' : 'primary'"
-            >{{tag | tagFilters(tagFilter)}}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column align="right" width="180">
-          <template slot="header" slot-scope="scope">
-            <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
-          </template>
-          <template slot-scope="scope">
-            <el-button size="mini" @click="toProblem(scope.row)">编辑</el-button>
-            <el-button size="mini" type="primary" @click="joinCourseButton(scope.row)">加入课程</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <el-pagination
-        @current-change="handleCurrentChange"
-        :current-page.sync="currentPage"
-        :page-size="10"
-        layout="prev, pager, next, jumper"
-        :total="problems.total"
-      ></el-pagination>
-
-      <el-dialog title="选择课程" :visible.sync="joinCourseVisible">
-        <el-form :model="form">
-          <el-form-item label="课程名称">
-            <el-select v-model="form.course_id" placeholder="请选择课程">
-              <el-option
-                v-for="course in courses"
-                :key="course.id"
-                :label="course.title"
-                :value="course.id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="joinCourseVisible = false">取 消</el-button>
-          <el-button type="primary" @click="joinCourse()">确 定</el-button>
-        </div>
-      </el-dialog>
-    </el-col>
-    <el-col :span="priview.pri">
-      <Priview :priview="priview" :pri_problem="pri_problem" @childFn="closePriview" />
-    </el-col>
-  </el-row>
+  <div class>
+    <router-view></router-view>
+  </div>
 </template>
 <script>
 import Headers from "@/pages/home/header";
@@ -130,7 +54,7 @@ export default {
     },
     toProblem(row) {
       this.$router.push({
-        path: "/problem/edit",
+        path: "/admin/problem/edit",
         query: {
           id: row.problem_id
         }
@@ -206,6 +130,7 @@ export default {
   },
   created() {
     this.getTags();
+    this.setProblems();
   }
 };
 </script>

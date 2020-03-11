@@ -9,7 +9,7 @@ async function type(ctx) {
 }
 
 async function typeAdd(ctx) {
-    const { label } = ctx.request.body
+    const { label } = ctx.request.fields
     const type = await mysql('problems_type').where({
         'label': label
     })
@@ -36,7 +36,7 @@ async function typeAdd(ctx) {
 
 
 async function typeDetele(ctx) {
-    const { label, id } = ctx.request.body
+    const { label, id } = ctx.request.fields
     const type = await mysql('problems_type').where('id', '=', id).delete()
 
     ctx.body = {
@@ -47,7 +47,7 @@ async function typeDetele(ctx) {
 }
 
 async function typeEdit(ctx) {
-    const { id, label } = ctx.request.body
+    const { id, label } = ctx.request.fields
     const type = await mysql('problems_type').where({
         'id': id
     })

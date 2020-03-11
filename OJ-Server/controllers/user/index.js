@@ -16,7 +16,7 @@ async function users(ctx) {
 }
 
 async function usersAdd(ctx) {
-    const { name, password, limit } = ctx.request.body
+    const { name, password, limit } = ctx.request.fields
     const users = await mysql('user_table').where({
         'name': name
     })
@@ -43,7 +43,7 @@ async function usersAdd(ctx) {
 
 }
 async function usersEdit(ctx) {
-    const { id, name, password, limit } = ctx.request.body
+    const { id, name, password, limit } = ctx.request.fields
     const users = await mysql('user_table').where({
         'id': id
     })
@@ -79,7 +79,7 @@ async function usersEdit(ctx) {
 }
 
 async function usersDetele(ctx) {
-    const { name, password } = ctx.request.body
+    const { name, password } = ctx.request.fields
     const users = await mysql('user_table').where('name', '=', name).delete()
 
     ctx.body = {

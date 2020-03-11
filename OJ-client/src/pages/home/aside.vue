@@ -10,7 +10,7 @@
   >
     <el-submenu index="1">
       <template slot="title">
-        <i class="el-icon-user"></i>
+        <i class="el-icon-house"></i>
         <span>公共题库</span>
       </template>
       <el-menu-item
@@ -26,7 +26,7 @@
     <el-submenu index="2">
       <template slot="title">
         <i class="el-icon-collection-tag"></i>
-        <span slot="title">私有题库</span>
+        <span slot="title">个人课程</span>
       </template>
       <el-menu-item index="2-0">
         <!-- <el-button type="primary" @click="toAdd">新建课程</el-button> -->
