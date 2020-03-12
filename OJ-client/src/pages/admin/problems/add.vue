@@ -107,12 +107,11 @@ export default {
   },
   methods: {
     async issueProblem() {
-      console.log(this.problem);
       let { data: res } = await this.$http.post("problem/add", this.problem);
       if (res.state == 0) {
         this.$message.success("添加题目成功");
       } else {
-        this.$message.console.error("添加题目失败");
+        this.$message.error("添加题目失败");
       }
     },
     getCatalogs(val) {

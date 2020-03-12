@@ -2,14 +2,22 @@ const { mysql } = require('../../mysql')
 
 async function catalogs(ctx) {
     const { parentID } = ctx.request.query
-    const data = await mysql('problems_catalogs').where({
-        'parentID': parentID
-    })
-
-    ctx.body = {
-        'data': data,
-        'code': 0
+    if (parentID) {
+        const data = await mysql('problems_catalogs').where({
+            'parentID': parentID
+        })
+        ctx.body = {
+            'data': data,
+            'code': 0
+        }
+    } else {
+        const data = await mysql('problems_catalogs')
+        ctx.body = {
+            'data': data,
+            'code': 0
+        }
     }
+
 }
 
 async function catalogsAdd(ctx) {

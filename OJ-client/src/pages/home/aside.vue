@@ -43,6 +43,10 @@
       <i class="el-icon-setting"></i>
       <span slot="title" @click="$router.push('/home/setting')">信息设置</span>
     </el-menu-item>
+    <el-menu-item index="5">
+      <i class="el-icon-info"></i>
+      <span slot="title" @click="$router.push('/home/help')">信息查询</span>
+    </el-menu-item>
   </el-menu>
 </template>
 

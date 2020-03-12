@@ -12,10 +12,16 @@
         <el-checkbox v-model="privatechecked">查看私人题目</el-checkbox>
       </el-col>
       <el-col :span="12" style="text-align:right;">
-        <router-link to="/problem/add">
-          <el-button type="primary">新建题目</el-button>
-        </router-link>
-        <el-button type="success">批量添加题目</el-button>
+        <el-row>
+          <el-col :span="18">
+            <router-link to="/problem/add">
+              <el-button type="primary">新建题目</el-button>
+            </router-link>
+          </el-col>
+          <el-col :span="6">
+            <ExcelSelect />
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
     <br />
@@ -27,6 +33,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
+import ExcelSelect from "@/components/problem/excel";
 
 export default {
   data() {
@@ -35,6 +42,9 @@ export default {
       data: 0,
       activeType: ""
     };
+  },
+  components: {
+    ExcelSelect
   },
   methods: {
     getCheckedNodes(val) {

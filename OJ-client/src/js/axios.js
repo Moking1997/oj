@@ -3,8 +3,12 @@ import {
     cookie
 } from './cookies.js'
 // 后端给的服务器基址
-const urlHeard = 'http://localhost:5757/api/';
-
+let urlHeard
+if (process.env.NODE_ENV == 'development') {
+    urlHeard = 'http://localhost:5757/api/'
+} else {
+    urlHeard = 'http://106.54.55.98:5757/api/'
+}
 axios.defaults.baseURL = urlHeard;
 // axios.defaults.timeout = 60000;
 

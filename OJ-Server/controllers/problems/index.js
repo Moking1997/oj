@@ -75,7 +75,6 @@ async function problmeAdd(ctx) {
         type = '',
         personal = 0
     } = ctx.request.fields
-    console.log(ctx.request.fields)
     const id = await mysql('problem').insert({
         'score': score,
         'source': source,
@@ -91,35 +90,37 @@ async function problmeAdd(ctx) {
         'personal': personal
     })
     let fileState = {}
-    fs.mkdir("upload/" + id, function (err) {
+    await fs.mkdir("upload/" + id, function (err) {
         if (err) {
             fileState.file = "id目录创建失败"
             return console.error(err);
         }
-        console.log("id目录创建成功。");
+        console.log("编号", id, ":目录创建成功。");
         fileState.file = "id目录创建成功"
+        fs.writeFile('./upload/' + id + "/sample_input.in", `${sample_input}`, function (err) {
+            if (err) {
+                console.log("编号", id, "sample_input失败", err)
+                fileState.sample_input = "sample_input失败"
+            } else {
+                console.log("编号", id, "sample_input成功");
+                fileState.sample_input = "sample_input成功"
+            }
+        })
+        fs.writeFile('./upload/' + id + "/sample_output.in", `${sample_output}`, function (err) {
+            if (err) {
+                console.log("编号", id, "sample_output失败", err)
+                fileState.sample_output = "sample_output失败"
+            } else {
+                console.log("编号", id, "sample_output成功");
+                fileState.sample_output = "sample_output成功"
+            }
+        })
     });
-    fs.writeFile('./upload/' + id + "/sample_input.in", `${sample_input}`, function (err) {
-        if (err) {
-            console.log("sample_input失败", err)
-            fileState.sample_input = "sample_input失败"
-        } else {
-            console.log("sample_input成功");
-            fileState.sample_input = "sample_input成功"
-        }
-    })
-    fs.writeFile('./upload/' + id + "/sample_output.in", `${sample_output}`, function (err) {
-        if (err) {
-            console.log("sample_output失败", err)
-            fileState.sample_output = "sample_output失败"
-        } else {
-            console.log("sample_output成功");
-            fileState.sample_output = "sample_output成功"
-        }
-    })
+
 
     if (id) {
         ctx.body = {
+            'fileState': fileState,
             'id': id,
             'state': 0,
             'msg': "新增题目成功",

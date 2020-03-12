@@ -3,6 +3,7 @@ import Private from '@/pages/home/private'
 import Commonality from '@/pages/home/commonality'
 import Setting from '@/pages/home/setting'
 import OpenCourse from '@/pages/home/openCourse'
+import Help from '@/pages/home/help'
 
 import CourseIndex from '@/pages/course/index'
 import CourseAdd from '@/pages/course/add'
@@ -15,6 +16,7 @@ const home = {
         { path: 'commonality', component: Commonality },
         { path: 'setting', component: Setting },
         { path: 'openCourse', component: OpenCourse },
+        { path: 'help', component: Help },
         {
             path: 'private', component: Private,
             children: [

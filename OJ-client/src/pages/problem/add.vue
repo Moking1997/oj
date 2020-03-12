@@ -112,7 +112,7 @@ export default {
       if (res.state == 0) {
         this.$message.success("添加题目成功");
       } else {
-        this.$message.console.error("添加题目失败");
+        this.$message.error("添加题目失败");
       }
     },
     getCatalogs(val) {
