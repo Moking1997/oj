@@ -30,8 +30,8 @@ export default {
     return {
       logining: false,
       form: {
-        name: "admin",
-        password: "admin"
+        name: "",
+        password: ""
       },
       ruleForm: {
         name: [{ required: true, message: "请输入账号", trigger: "blur" }],
@@ -60,7 +60,6 @@ export default {
             this.$message.error("密码错误");
           }
         } else {
-          console.log("error submit!");
           return false;
         }
       });
