@@ -10,14 +10,16 @@ async function loginCheck(ctx) {
     if (users.length == 0) {
         ctx.body = {
             'state': 1,
-            'msg': '用户不存在'
+            'msg': '用户不存在',
+            'code': 0
         }
     } else {
         let user = users[0]
         if (user.password != password) {
             ctx.body = {
                 'state': 2,
-                'msg': '密码错误'
+                'msg': '密码错误',
+                'code': 0
             }
         } else {
             let token = guld().replace(/\-/g, '')
