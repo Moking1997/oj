@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "knex": "^0.20.10",
+    "knex": "^2.4.0",
     "koa": "^2.11.0",
     "koa-bodyparser": "^3.2.0",
     "koa-router": "^8.0.8",
